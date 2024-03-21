@@ -17,11 +17,11 @@ export interface IUser {
   id: ObjectId
   email: string
   password: string
-  firstName?: string
-  lastName?: string
-  verified: boolean
-  verifications?: ObjectId[]
-  resetPasswords?: ObjectId[]
+  firstName: string
+  lastName: string
+  bio: string
+  completedTasks: string[]
+  points: number
 }
 
 export interface IUserMethods {

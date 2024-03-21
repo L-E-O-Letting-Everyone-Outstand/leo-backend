@@ -14,7 +14,7 @@ export const users = (router: Router): void => {
     userController.verificationRequest
   )
 
-  router.get('/user/verification/:accessToken', userController.verification)
+  // router.get('/user/verification/:accessToken', userController.verification)
 
   router.post(
     '/user/update',
