@@ -1,3 +1,5 @@
 export { authController } from './authController'
 export { userController } from './userController'
 export { mediaController } from './mediaController'
+export { questController } from './questController'
+export { activityController } from './activityController'

@@ -9,12 +9,9 @@ const schema = new Schema<IUser, UserModel, IUserMethods>(
     password: String,
     firstName: String,
     lastName: String,
-    verified: {
-      type: Boolean,
-      default: false
-    },
-    verifications: [{ type: Schema.Types.ObjectId, ref: 'Verification' }],
-    resetPasswords: [{ type: Schema.Types.ObjectId, ref: 'ResetPassword' }]
+    bio: String,
+    completedQuests: [{ type: Schema.Types.ObjectId, ref: 'Quest' }],
+    points: { type: Schema.Types.Number, default: 0 }
   },
   { timestamps: true }
 )

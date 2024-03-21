@@ -10,11 +10,7 @@ import {
   SignInPayload,
   SignUpPayload
 } from '@/contracts/auth'
-import {
-  resetPasswordService,
-  verificationService,
-  userService
-} from '@/services'
+import { resetPasswordService, userService } from '@/services'
 import { jwtSign } from '@/utils/jwt'
 import {
   IBodyRequest,
@@ -76,7 +72,6 @@ export const authController = {
         })
       }
 
-      session.startTransaction()
       const hashedPassword = await createHash(password)
 
       const user = await userService.create(
@@ -87,43 +82,7 @@ export const authController = {
         session
       )
 
-      const cryptoString = createCryptoString()
-
-      const dateFromNow = createDateAddDaysFromNow(ExpiresInDays.Verification)
-
-      const verification = await verificationService.create(
-        {
-          userId: user.id,
-          email,
-          accessToken: cryptoString,
-          expiresIn: dateFromNow
-        },
-        session
-      )
-
-      await userService.addVerificationToUser(
-        {
-          userId: user.id,
-          verificationId: verification.id
-        },
-        session
-      )
-
-      const { accessToken } = jwtSign(user.id)
-
-      const userMail = new UserMail()
-
-      userMail.signUp({
-        email: user.email
-      })
-
-      userMail.verification({
-        email: user.email,
-        accessToken: cryptoString
-      })
-
-      await session.commitTransaction()
-      session.endSession()
+      const { accessToken } = jwtSign(user._id)
 
       return res.status(StatusCodes.OK).json({
         data: { accessToken },

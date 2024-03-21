@@ -6,7 +6,6 @@ import winston from 'winston'
 import {
   ICombinedRequest,
   IContextRequest,
-  IParamsRequest,
   IUserRequest
 } from '@/contracts/request'
 import {
@@ -145,63 +144,63 @@ export const userController = {
     }
   },
 
-  verification: async (
-    { params }: IParamsRequest<{ accessToken: string }>,
-    res: Response
-  ) => {
-    const session = await startSession()
-    try {
-      const verification = await verificationService.getByValidAccessToken(
-        params.accessToken
-      )
+  // verification: async (
+  //   { params }: IParamsRequest<{ accessToken: string }>,
+  //   res: Response
+  // ) => {
+  //   const session = await startSession()
+  //   try {
+  //     const verification = await verificationService.getByValidAccessToken(
+  //       params.accessToken
+  //     )
 
-      if (!verification) {
-        return res.status(StatusCodes.FORBIDDEN).json({
-          message: ReasonPhrases.FORBIDDEN,
-          status: StatusCodes.FORBIDDEN
-        })
-      }
+  //     if (!verification) {
+  //       return res.status(StatusCodes.FORBIDDEN).json({
+  //         message: ReasonPhrases.FORBIDDEN,
+  //         status: StatusCodes.FORBIDDEN
+  //       })
+  //     }
 
-      session.startTransaction()
+  //     session.startTransaction()
 
-      await userService.updateVerificationAndEmailByUserId(
-        verification.user,
-        verification.email,
-        session
-      )
+  //     await userService.updateVerificationAndEmailByUserId(
+  //       verification.user,
+  //       verification.email,
+  //       session
+  //     )
 
-      await verificationService.deleteManyByUserId(verification.user, session)
+  //     await verificationService.deleteManyByUserId(verification.user, session)
 
-      const { accessToken } = jwtSign(verification.user)
+  //     const { accessToken } = jwtSign(verification.user)
 
-      const userMail = new UserMail()
+  //     const userMail = new UserMail()
 
-      userMail.successfullyVerified({
-        email: verification.email
-      })
+  //     userMail.successfullyVerified({
+  //       email: verification.email
+  //     })
 
-      await session.commitTransaction()
-      session.endSession()
+  //     await session.commitTransaction()
+  //     session.endSession()
 
-      return res.status(StatusCodes.OK).json({
-        data: { accessToken },
-        message: ReasonPhrases.OK,
-        status: StatusCodes.OK
-      })
-    } catch (error) {
-      winston.error(error)
+  //     return res.status(StatusCodes.OK).json({
+  //       data: { accessToken },
+  //       message: ReasonPhrases.OK,
+  //       status: StatusCodes.OK
+  //     })
+  //   } catch (error) {
+  //     winston.error(error)
 
-      if (session.inTransaction()) {
-        await session.abortTransaction()
-        session.endSession()
-      }
+  //     if (session.inTransaction()) {
+  //       await session.abortTransaction()
+  //       session.endSession()
+  //     }
 
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        message: ReasonPhrases.BAD_REQUEST,
-        status: StatusCodes.BAD_REQUEST
-      })
-    }
-  },
+  //     return res.status(StatusCodes.BAD_REQUEST).json({
+  //       message: ReasonPhrases.BAD_REQUEST,
+  //       status: StatusCodes.BAD_REQUEST
+  //     })
+  //   }
+  // },
 
   updateProfile: async (
     {
