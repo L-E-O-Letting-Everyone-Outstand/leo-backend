@@ -26,7 +26,7 @@
     "start": "npm run rm:public && cross-env NODE_ENV=production ts-node --files -r tsconfig-paths/register ./src",
     "watch": "npm run rm:public && cross-env ts-node-dev --files --respawn --inspect -r tsconfig-paths/register ./src",
     "build": "npm run rm:public && cross-env NODE_ENV=production tsc && tsc-alias && npm run copy:files",
-    "rm:public": "del -f ./public",
+    "rm:public": "shx rm -rf ./public",
     "copy:files": "cp .env ./public/.env && cp -R ./src/templates ./public",
     "seed": "ts-node --files -r tsconfig-paths/register ./src/seeds",
     "lint": "eslint --debug ./src",
@@ -81,6 +81,7 @@
     "randomstring": "1.2.3",
     "redis": "4.3.1",
     "sharp": "^0.33.2",
+    "shx": "^0.3.4",
     "validator": "13.7.0",
     "winston": "3.8.2"
   }
