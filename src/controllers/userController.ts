@@ -6,6 +6,7 @@ import winston from 'winston'
 import {
   ICombinedRequest,
   IContextRequest,
+  IParamsRequest,
   IUserRequest
 } from '@/contracts/request'
 import {
@@ -35,6 +36,8 @@ export const userController = {
     { context: { user } }: IContextRequest<IUserRequest>,
     res: Response
   ) => {
+    console.log(user)
+
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).json({
         message: ReasonPhrases.NOT_FOUND,
@@ -144,6 +147,39 @@ export const userController = {
     }
   },
 
+  getById: async (
+    {
+      context: { user },
+      params: { userId }
+    }: ICombinedRequest<
+      IUserRequest,
+      Record<string, unknown>,
+      IParamsRequest<{ questId: string }>
+    >,
+    res: Response
+  ) => {
+    try {
+      const foundUser = userService.getById(userId)
+      if (!foundUser) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          message: ReasonPhrases.BAD_REQUEST,
+          status: StatusCodes.BAD_REQUEST
+        })
+      }
+      return res.status(StatusCodes.OK).json({
+        data: { ...foundUser },
+        message: ReasonPhrases.OK,
+        status: StatusCodes.OK
+      })
+    } catch (error) {
+      winston.error(error)
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: ReasonPhrases.BAD_REQUEST,
+        status: StatusCodes.BAD_REQUEST
+      })
+    }
+  },
+
   // verification: async (
   //   { params }: IParamsRequest<{ accessToken: string }>,
   //   res: Response
@@ -205,21 +241,14 @@ export const userController = {
   updateProfile: async (
     {
       context: { user },
-      body: { firstName, lastName }
+      body: { bio }
     }: ICombinedRequest<IUserRequest, UpdateProfilePayload>,
     res: Response
   ) => {
     try {
-      await userService.updateProfileByUserId(user.id, { firstName, lastName })
-
-      const userMail = new UserMail()
-
-      userMail.successfullyUpdatedProfile({
-        email: user.email
-      })
+      await userService.updateProfileByUserId(user.id, { bio })
 
       return res.status(StatusCodes.OK).json({
-        data: { firstName, lastName },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })

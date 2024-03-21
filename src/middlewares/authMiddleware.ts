@@ -10,6 +10,7 @@ export const authMiddleware = async (
   _: Response,
   next: NextFunction
 ): Promise<void> => {
+  console.log("REQUEST RECEIVED")
   try {
     Object.assign(req, { context: {} })
 

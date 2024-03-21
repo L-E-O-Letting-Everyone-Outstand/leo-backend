@@ -56,47 +56,47 @@ export const userValidation = {
     }
   },
 
-  updateProfile: (
-    req: IBodyRequest<UpdateProfilePayload>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      if (!req.body.firstName || !req.body.lastName) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: ReasonPhrases.BAD_REQUEST,
-          status: StatusCodes.BAD_REQUEST
-        })
-      }
+  // updateProfile: (
+  //   req: IBodyRequest<UpdateProfilePayload>,
+  //   res: Response,
+  //   next: NextFunction
+  // ) => {
+  //   try {
+  //     if (!req.body.firstName || !req.body.lastName) {
+  //       return res.status(StatusCodes.BAD_REQUEST).json({
+  //         message: ReasonPhrases.BAD_REQUEST,
+  //         status: StatusCodes.BAD_REQUEST
+  //       })
+  //     }
 
-      const trimemdFirstName = validator.trim(req.body.firstName)
-      const trimemdLastName = validator.trim(req.body.lastName)
+  //     const trimemdFirstName = validator.trim(req.body.firstName)
+  //     const trimemdLastName = validator.trim(req.body.lastName)
 
-      if (
-        !validator.isLength(trimemdFirstName, { min: 2, max: 48 }) ||
-        !validator.isLength(trimemdLastName, { min: 2, max: 48 })
-      ) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-          message: ReasonPhrases.BAD_REQUEST,
-          status: StatusCodes.BAD_REQUEST
-        })
-      }
+  //     if (
+  //       !validator.isLength(trimemdFirstName, { min: 2, max: 48 }) ||
+  //       !validator.isLength(trimemdLastName, { min: 2, max: 48 })
+  //     ) {
+  //       return res.status(StatusCodes.BAD_REQUEST).json({
+  //         message: ReasonPhrases.BAD_REQUEST,
+  //         status: StatusCodes.BAD_REQUEST
+  //       })
+  //     }
 
-      Object.assign(req.body, {
-        firstName: trimemdFirstName,
-        lastName: trimemdLastName
-      })
+  //     Object.assign(req.body, {
+  //       firstName: trimemdFirstName,
+  //       lastName: trimemdLastName
+  //     })
 
-      return next()
-    } catch (error) {
-      winston.error(error)
+  //     return next()
+  //   } catch (error) {
+  //     winston.error(error)
 
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        message: ReasonPhrases.BAD_REQUEST,
-        status: StatusCodes.BAD_REQUEST
-      })
-    }
-  },
+  //     return res.status(StatusCodes.BAD_REQUEST).json({
+  //       message: ReasonPhrases.BAD_REQUEST,
+  //       status: StatusCodes.BAD_REQUEST
+  //     })
+  //   }
+  // },
 
   updateEmail: (
     req: IBodyRequest<UpdateEmailPayload>,

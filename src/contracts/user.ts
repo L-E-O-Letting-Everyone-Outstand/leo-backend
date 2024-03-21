@@ -33,9 +33,7 @@ export type UserModel = Model<IUser, unknown, IUserMethods>
 
 export type VerificationRequestPayload = Pick<IUser, 'email'>
 
-export type UpdateProfilePayload = Required<
-  Pick<IUser, 'firstName' | 'lastName'>
->
+export type UpdateProfilePayload = Required<Pick<IUser, 'bio'>>
 
 export type UpdateEmailPayload = Pick<IUser, 'email' | 'password'>
 

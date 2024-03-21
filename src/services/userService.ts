@@ -21,7 +21,7 @@ export const userService = {
       verified
     }).save({ session }),
 
-  getById: (userId: ObjectId) => User.findById(userId),
+  getById: (userId: ObjectId | string) => User.findById(userId),
 
   getByEmail: (email: string) => User.findOne({ email }),
 
@@ -65,10 +65,10 @@ export const userService = {
 
   updateProfileByUserId: (
     userId: ObjectId,
-    { firstName, lastName }: { firstName: string; lastName: string },
+    { bio }: { bio: string },
     session?: ClientSession
   ) => {
-    const data = [{ _id: userId }, { firstName, lastName }]
+    const data = [{ _id: userId }, { bio }]
 
     let params = null
 
@@ -138,5 +138,12 @@ export const userService = {
     }
 
     const user = await User.findOne({ _id: userId }, null, options)
-  }
+  },
+  takeQuest: (userId: string, questId: string) =>
+    User.findByIdAndUpdate(userId, { $push: { takenQuests: questId } }),
+  completeQuest: (userId: string, questId: string) =>
+    User.findByIdAndUpdate(userId, {
+      $push: { completedQuests: questId },
+      $pull: { takenQuests: questId }
+    })
 }

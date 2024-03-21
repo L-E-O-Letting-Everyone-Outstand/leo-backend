@@ -5,7 +5,7 @@ import { userController } from '@/controllers'
 import { userValidation } from '@/validations'
 
 export const users = (router: Router): void => {
-  router.get('/me', authGuard.isAuth, userController.me)
+  router.get('/user/me', authGuard.isAuth, userController.me)
 
   router.post(
     '/user/verification/request',
@@ -14,13 +14,8 @@ export const users = (router: Router): void => {
     userController.verificationRequest
   )
 
-  router.post(
-    '/user/update',
-    authGuard.isAuth,
-    userValidation.updateProfile,
-    userController.updateProfile
-  )
+  router.post('/user/update', authGuard.isAuth, userController.updateProfile)
 
-  router.get('/user/:id', authGuard.isAuth)
-  router.get('/user/getAll', authGuard.isAuth)
+  router.get('/user/all', authGuard.isAuth)
+  router.get('/user/:userId', authGuard.isAuth, userController.getById)
 }

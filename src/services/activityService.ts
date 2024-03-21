@@ -22,5 +22,8 @@ export const activityService = {
       participants: [creatorId]
     }).save({ session }),
 
-  getAll: () => Activity.find()
+  getAll: () => Activity.find(),
+  getById: (activityId: string) => Activity.findById(activityId),
+  addParticipant: (activityId: string, userId: string) =>
+    Activity.findByIdAndUpdate(activityId, { $push: { participants: userId } })
 }

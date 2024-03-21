@@ -1,6 +1,7 @@
 import { ClientSession } from 'mongoose'
 
 import { Quest } from '../models/quest'
+import { User } from '../models'
 
 export const questService = {
   create: (
@@ -21,5 +22,6 @@ export const questService = {
       pointsAmount
     }).save({ session }),
 
-  getAll: () => Quest.find()
+  getAll: () => Quest.find(),
+  getById: (id: string) => Quest.findById(id)
 }

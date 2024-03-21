@@ -8,14 +8,14 @@ export const auth = (router: Router): void => {
   router.post(
     '/auth/sign-in',
     authGuard.isGuest,
-    authValidation.signIn,
+    // authValidation.signIn,
     authController.signIn
   )
 
   router.post(
     '/auth/sign-up',
     authGuard.isGuest,
-    authValidation.signUp,
+    // authValidation.signUp,
     authController.signUp
   )
 
