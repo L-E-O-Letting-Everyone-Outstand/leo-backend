@@ -14,8 +14,6 @@ export const users = (router: Router): void => {
     userController.verificationRequest
   )
 
-  // router.get('/user/verification/:accessToken', userController.verification)
-
   router.post(
     '/user/update',
     authGuard.isAuth,
@@ -23,31 +21,6 @@ export const users = (router: Router): void => {
     userController.updateProfile
   )
 
-  router.post(
-    '/user/update/email',
-    authGuard.isAuth,
-    userValidation.updateEmail,
-    userController.updateEmail
-  )
-
-  router.post(
-    '/user/update/password',
-    authGuard.isAuth,
-    userValidation.updatePassword,
-    userController.updatePassword
-  )
-
-  router.post(
-    '/user/update/avatar',
-    authGuard.isAuth,
-    userValidation.updateAvatar,
-    userController.updateAvatar
-  )
-
-  router.post(
-    '/user/delete',
-    authGuard.isAuth,
-    userValidation.deleteProfile,
-    userController.deleteProfile
-  )
+  router.get('/user/:id')
+  router.get('/user/getAll')
 }

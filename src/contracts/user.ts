@@ -20,7 +20,8 @@ export interface IUser {
   firstName: string
   lastName: string
   bio: string
-  completedTasks: string[]
+  takenQuests: ObjectId[]
+  completedQuests: ObjectId[]
   points: number
 }
 
