@@ -1,7 +1,7 @@
+/* eslint-disable linebreak-style */
 import express, { Express } from 'express'
 import { join } from 'path'
 import 'dotenv/config'
-
 import '@/infrastructure/logger'
 import { mongoose, redis } from '@/dataSources'
 import {
