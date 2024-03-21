@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
+
 import express, { Express } from 'express'
 import { join } from 'path'
 import 'dotenv/config'
@@ -32,4 +34,6 @@ app.use(
   notFoundMiddleware
 )
 
-app.listen(process.env.APP_PORT)
+app.listen(process.env.APP_PORT, () => {
+  console.log('STARTED WORKING ON PORT ', process.env.APP_PORT)
+})
