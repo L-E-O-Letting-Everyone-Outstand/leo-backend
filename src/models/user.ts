@@ -24,8 +24,6 @@ schema.methods.toJSON = function () {
   const obj = this.toObject()
 
   delete obj.password
-  delete obj.verifications
-  delete obj.resetPasswords
 
   return obj
 }

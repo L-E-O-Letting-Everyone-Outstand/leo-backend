@@ -45,7 +45,6 @@ export const activityController = {
   getAll: async (a: IBodyRequest<string>, res: Response) => {
     // try {
     //   const quests = await questService.getAll()
-
     //   return res.status(StatusCodes.OK).json({
     //     data: { quests: [...quests.map(el => el.toJSON())] },
     //     message: ReasonPhrases.OK,
@@ -53,7 +52,6 @@ export const activityController = {
     //   })
     // } catch (error) {
     //   winston.error(error)
-
     //   return res.status(StatusCodes.BAD_REQUEST).json({
     //     message: ReasonPhrases.BAD_REQUEST,
     //     status: StatusCodes.BAD_REQUEST

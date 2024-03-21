@@ -119,14 +119,6 @@ export const userService = {
     }
 
     const user = await User.findOne({ _id: userId }, null, options)
-
-    if (user) {
-      if (!user.resetPasswords) {
-        user.resetPasswords = []
-      }
-      user.resetPasswords.push(resetPasswordId)
-      await user.save({ session })
-    }
   },
 
   addVerificationToUser: async (
@@ -146,13 +138,5 @@ export const userService = {
     }
 
     const user = await User.findOne({ _id: userId }, null, options)
-
-    if (user) {
-      if (!user.verifications) {
-        user.verifications = []
-      }
-      user.verifications.push(verificationId)
-      await user.save({ session })
-    }
   }
 }
