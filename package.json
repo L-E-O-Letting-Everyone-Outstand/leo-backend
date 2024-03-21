@@ -1,7 +1,7 @@
 {
-  "name": "express-mongodb-rest-api-boilerplate",
-  "version": "1.0.3",
-  "description": "A boilerplate for Node.js apps / Rest API / Authentication from scratch - express, mongodb (mongoose).",
+  "name": "belfood-wellbeing-assistant-backend",
+  "version": "0.0.7",
+  "description": "Backend for a project created during START HACK.",
   "main": "./src",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "prettier": "prettier \"**/*.+(js|jsx|json|css|md)\"",
     "prettier:write": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
   },
-  "author": "Watscho Aiwasov",
+  "author": "Viacheslav Sydora",
   "license": "MIT",
   "devDependencies": {
     "@types/bcrypt": "5.0.0",

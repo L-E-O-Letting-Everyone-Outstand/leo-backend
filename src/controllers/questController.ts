@@ -27,7 +27,7 @@ export const questController = {
       })
 
       return res.status(StatusCodes.OK).json({
-        data: { ...quest.toJSON() },
+        data: { ...quest.toObject() },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })
@@ -46,7 +46,7 @@ export const questController = {
       const quests = await questService.getAll()
 
       return res.status(StatusCodes.OK).json({
-        data: { quests: [...quests.map(el => el.toJSON())] },
+        data: { quests: [...quests.map(el => el.toObject())] },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })
@@ -169,8 +169,16 @@ export const questController = {
         })
       }
 
+      const { completed, taken } = userService.getQuestParticipants(questId)
+
       return res.status(StatusCodes.OK).json({
-        data: { ...quest },
+        data: {
+          ...quest.toObject(),
+          users: {
+            completed: await completed,
+            taken: await taken
+          }
+        },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })

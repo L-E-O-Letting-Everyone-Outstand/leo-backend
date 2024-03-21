@@ -29,7 +29,7 @@ export const activityController = {
       })
 
       return res.status(StatusCodes.OK).json({
-        data: { ...activity.toJSON() },
+        data: { ...activity.toObject() },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })
@@ -121,8 +121,10 @@ export const activityController = {
         })
       }
 
+      await activity.populate('participants')
+
       return res.status(StatusCodes.OK).json({
-        data: { ...activity },
+        data: { ...activity.toObject() },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })

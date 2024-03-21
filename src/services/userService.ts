@@ -145,5 +145,14 @@ export const userService = {
     User.findByIdAndUpdate(userId, {
       $push: { completedQuests: questId },
       $pull: { takenQuests: questId }
-    })
+    }),
+  getQuestParticipants: (questId: string) => {
+    const completed = User.find({ completedQuests: questId })
+    const taken = User.find({ takenQuests: questId })
+
+    return {
+      completed,
+      taken
+    }
+  }
 }

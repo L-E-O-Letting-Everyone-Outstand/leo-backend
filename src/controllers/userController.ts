@@ -36,8 +36,6 @@ export const userController = {
     { context: { user } }: IContextRequest<IUserRequest>,
     res: Response
   ) => {
-    console.log(user)
-
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).json({
         message: ReasonPhrases.NOT_FOUND,
@@ -56,7 +54,7 @@ export const userController = {
     }
 
     return res.status(StatusCodes.OK).json({
-      data: { ...user.toJSON(), image },
+      data: { ...user.toObject(), image },
       message: ReasonPhrases.OK,
       status: StatusCodes.OK
     })
@@ -159,7 +157,7 @@ export const userController = {
     res: Response
   ) => {
     try {
-      const foundUser = userService.getById(userId)
+      const foundUser = await userService.getById(userId)
       if (!foundUser) {
         return res.status(StatusCodes.BAD_REQUEST).json({
           message: ReasonPhrases.BAD_REQUEST,
@@ -167,7 +165,7 @@ export const userController = {
         })
       }
       return res.status(StatusCodes.OK).json({
-        data: { ...foundUser },
+        data: { ...foundUser.toObject() },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })

@@ -23,6 +23,7 @@ export interface IUser {
   takenQuests: ObjectId[]
   completedQuests: ObjectId[]
   points: number
+  avatar: string
 }
 
 export interface IUserMethods {

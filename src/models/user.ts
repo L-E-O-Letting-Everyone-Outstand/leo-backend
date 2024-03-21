@@ -10,8 +10,9 @@ const schema = new Schema<IUser, UserModel, IUserMethods>(
     firstName: String,
     lastName: String,
     bio: String,
-    completedQuests: [{ type: Schema.Types.ObjectId, ref: 'Quest' }],
-    points: { type: Schema.Types.Number, default: 0 }
+    avatar: String,
+    takenQuests: [{ type: Schema.Types.ObjectId, ref: 'Quest' }],
+    completedQuests: [{ type: Schema.Types.ObjectId, ref: 'Quest' }]
   },
   { timestamps: true }
 )

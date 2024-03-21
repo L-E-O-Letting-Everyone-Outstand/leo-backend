@@ -1,7 +1,6 @@
 import { ClientSession } from 'mongoose'
 
 import { Quest } from '../models/quest'
-import { User } from '../models'
 
 export const questService = {
   create: (
