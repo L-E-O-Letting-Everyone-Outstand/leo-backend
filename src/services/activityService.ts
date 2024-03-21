@@ -25,5 +25,6 @@ export const activityService = {
   getAll: () => Activity.find(),
   getById: (activityId: string) => Activity.findById(activityId),
   addParticipant: (activityId: string, userId: string) =>
-    Activity.findByIdAndUpdate(activityId, { $push: { participants: userId } })
+    Activity.findByIdAndUpdate(activityId, { $push: { participants: userId } }),
+  getByUserId: (userId: string) => Activity.find({ participants: userId })
 }

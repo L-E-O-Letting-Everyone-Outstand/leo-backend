@@ -26,10 +26,10 @@ import { ExpiresInDays, MediaRefType } from '@/constants'
 import { createDateAddDaysFromNow } from '@/utils/dates'
 import { createCryptoString } from '@/utils/cryptoString'
 import { UserMail } from '@/mailer'
-import { jwtSign } from '@/utils/jwt'
 import { createHash } from '@/utils/hash'
 import { Image } from '@/infrastructure/image'
 import { appUrl } from '@/utils/paths'
+import { activityService } from '../services/activityService'
 
 export const userController = {
   me: async (
@@ -43,6 +43,8 @@ export const userController = {
       })
     }
 
+    await user.populate(['completedQuests', 'takenQuests'])
+
     const media = await mediaService.findOneByRef({
       refType: MediaRefType.User,
       refId: user.id
@@ -53,8 +55,12 @@ export const userController = {
       image = appUrl(await new Image(media).sharp({ width: 150, height: 150 }))
     }
 
+    const activities = await activityService.getByUserId(user.id)
     return res.status(StatusCodes.OK).json({
-      data: { ...user.toObject(), image },
+      data: {
+        ...user.toObject(),
+        activities: [...activities.map(el => el.toObject())]
+      },
       message: ReasonPhrases.OK,
       status: StatusCodes.OK
     })
@@ -147,12 +153,11 @@ export const userController = {
 
   getById: async (
     {
-      context: { user },
       params: { userId }
     }: ICombinedRequest<
       IUserRequest,
       Record<string, unknown>,
-      IParamsRequest<{ questId: string }>
+      IParamsRequest<{ userId: string }>
     >,
     res: Response
   ) => {
@@ -164,8 +169,13 @@ export const userController = {
           status: StatusCodes.BAD_REQUEST
         })
       }
+      await foundUser.populate(['completedQuests', 'takenQuests'])
+      const activities = await activityService.getByUserId(userId)
       return res.status(StatusCodes.OK).json({
-        data: { ...foundUser.toObject() },
+        data: {
+          ...foundUser.toObject(),
+          activities: [...activities.map(el => el.toObject())]
+        },
         message: ReasonPhrases.OK,
         status: StatusCodes.OK
       })
