@@ -21,6 +21,6 @@ export const users = (router: Router): void => {
     userController.updateProfile
   )
 
-  router.get('/user/:id')
-  router.get('/user/getAll')
+  router.get('/user/:id', authGuard.isAuth)
+  router.get('/user/getAll', authGuard.isAuth)
 }
