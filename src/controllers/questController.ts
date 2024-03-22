@@ -11,6 +11,7 @@ import {
 import { CreateQuestPayload } from '@/contracts/quest'
 import { questService } from '../services/questService'
 import { userService } from '../services'
+import { transactionService } from '../services/transactionService'
 
 export const questController = {
   create: async (
@@ -135,6 +136,12 @@ export const questController = {
       }
 
       await userService.completeQuest(user.id, questId)
+
+      await transactionService.create({
+        userId: user.id,
+        questId,
+        delta: quest.pointsAmount
+      })
 
       return res.status(StatusCodes.OK).json({
         message: ReasonPhrases.OK,

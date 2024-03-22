@@ -30,19 +30,34 @@ import { createHash } from '@/utils/hash'
 import { Image } from '@/infrastructure/image'
 import { appUrl } from '@/utils/paths'
 import { activityService } from '../services/activityService'
+import { transactionService } from '../services/transactionService'
 
 export const userController = {
+  meBalance: async (
+    { context: { user } }: IContextRequest<IUserRequest>,
+    res: Response
+  ) => {
+    try {
+      const balance = await transactionService.getBalance(user.id)
+
+      return res.status(StatusCodes.OK).json({
+        data: {
+          balance
+        },
+        message: ReasonPhrases.OK,
+        status: StatusCodes.OK
+      })
+    } catch (err) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: ReasonPhrases.BAD_REQUEST,
+        status: StatusCodes.BAD_REQUEST
+      })
+    }
+  },
   me: async (
     { context: { user } }: IContextRequest<IUserRequest>,
     res: Response
   ) => {
-    if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: ReasonPhrases.NOT_FOUND,
-        status: StatusCodes.NOT_FOUND
-      })
-    }
-
     await user.populate(['completedQuests', 'takenQuests'])
 
     const media = await mediaService.findOneByRef({

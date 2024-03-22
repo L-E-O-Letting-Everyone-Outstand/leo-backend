@@ -102,23 +102,13 @@ export const userService = {
   deleteById: (userId: ObjectId, session?: ClientSession) =>
     User.deleteOne({ user: userId }, { session }),
 
-  addResetPasswordToUser: async (
-    {
-      userId,
-      resetPasswordId
-    }: {
-      userId: ObjectId
-      resetPasswordId: ObjectId
-    },
-    session?: ClientSession
-  ) => {
-    let options = {}
-
-    if (session) {
-      options = { session }
-    }
-
-    const user = await User.findOne({ _id: userId }, null, options)
+  addResetPasswordToUser: async ({
+    userId
+  }: {
+    userId: ObjectId
+    resetPasswordId: ObjectId
+  }) => {
+    return
   },
 
   addVerificationToUser: async (

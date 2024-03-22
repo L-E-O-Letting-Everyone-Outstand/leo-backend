@@ -4,7 +4,7 @@ export interface IQuest {
   id: ObjectId
   title: string
   description: string
-  pointsAmount: string
+  pointsAmount: number
 }
 
 export interface CreateQuestPayload {
