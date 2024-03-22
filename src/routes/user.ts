@@ -4,7 +4,7 @@ import { authGuard } from '@/guards'
 import { userController } from '@/controllers'
 import { userValidation } from '@/validations'
 
-export const users = (router: Router): void => {
+export const user = (router: Router): void => {
   router.get('/user/me', authGuard.isAuth, userController.me)
   router.get('/user/me/balance', authGuard.isAuth, userController.meBalance)
 

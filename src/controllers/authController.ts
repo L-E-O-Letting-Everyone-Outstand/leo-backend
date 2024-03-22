@@ -157,13 +157,10 @@ export const authController = {
         session
       )
 
-      await userService.addResetPasswordToUser(
-        {
-          userId: user.id,
-          resetPasswordId: resetPassword.id
-        },
-        session
-      )
+      await userService.addResetPasswordToUser({
+        userId: user.id,
+        resetPasswordId: resetPassword.id
+      })
 
       const userMail = new UserMail()
 
